@@ -9,10 +9,11 @@ const {
   resetPassword,
 } = require("../controllers/authController");
 
+
 const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/user", protect, getUser);
-router.post("/logout", protect, logout);
+router.get("/getUser", protect, getUser);
+router.post("/logout", logout);
 
 module.exports = router;

@@ -102,7 +102,9 @@ const login = async (req, res) => {
  * Logout
  */
 const logout = (req, res) => {
-  res.clearCookie("token").json({ message: "Logged out successfully" });
+  res
+    .clearCookie("token")
+    .json({ status: "success", message: "Logged out successfully" });
 };
 
 /**
@@ -110,14 +112,18 @@ const logout = (req, res) => {
  */
 const protect = async (req, res, next) => {
   try {
+    if (!req.cookies) {
+      return res.status(401).json({ message: "Not logged in" });
+    }
+
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ message: "Not logged in" });
 
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // attach user info to request
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
   } catch (err) {
-    console.error(err);
+    console.error("Protect error:", err);
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
