@@ -39,12 +39,15 @@ app.use("/api/cart", cartRouter);
 
 // ---------- Serve React build in production ----------
 if (process.env.NODE_ENV === "production") {
-  const buildPath = path.resolve(__dirname, "client", "build");
+  const buildPath = path.join(__dirname, "client", "build");
   app.use(express.static(buildPath));
 
   // SPA catch-all route — MUST be after API routes
-  app.get("/*", (req, res) => {
-    res.sendFile(path.resolve(buildPath, "index.html"));
+  app.use((req, res, next) => {
+    // If the request starts with /api, skip (for your API routes)
+    if (req.path.startsWith("/api")) return next();
+
+    res.sendFile(path.join(buildPath, "index.html"));
   });
 }
 
