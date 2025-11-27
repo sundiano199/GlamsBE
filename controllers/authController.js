@@ -2,43 +2,60 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
-const crypto = require("crypto");
-
-// JWT settings
+/* ---------- Config ---------- */
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = "7d"; // access token expiry
+const JWT_EXPIRES_IN = "7d"; // token expiry
+
+/* ---------- Helpers ---------- */
 
 /**
- * Helper to create a signed JWT for a user
+ * Sign a JWT for a user
+ * (include minimal info in payload)
  */
 const signToken = (user) => {
   return jwt.sign(
-    { id: user._id, email: user.email, fullName: user.fullName },
+    { id: String(user._id), email: user.email, fullName: user.fullName },
     JWT_SECRET,
     { expiresIn: JWT_EXPIRES_IN }
   );
 };
 
 /**
- * Cookie options factory (reused for set + clear)
+ * Cookie options factory (used for set + clear).
+ * - DO NOT set `domain` so cookie is host-scoped (important for proxy).
+ * - `sameSite:none` + `secure:true` in production to support cross-site cookies when needed.
  */
 const cookieOptions = () => ({
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+  secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-  path: "/", // ensure cookie is available site-wide
+  path: "/",
 });
 
 /**
- * Helper to send token in HTTP-only cookie
+ * Set token cookie on response
  */
 const sendTokenCookie = (res, token) => {
   res.cookie("token", token, cookieOptions());
 };
 
 /**
- * Sign Up
+ * Clear token cookie on response (explicitly overwrite)
+ */
+const clearTokenCookie = (res) => {
+  // Use same options but expire immediately
+  res.cookie("token", "", {
+    ...cookieOptions(),
+    maxAge: 0,
+    expires: new Date(0),
+  });
+};
+
+/* ---------- Controllers ---------- */
+
+/**
+ * Sign up (create user + set cookie)
  */
 const signup = async (req, res) => {
   try {
@@ -46,15 +63,16 @@ const signup = async (req, res) => {
 
     // Prevent duplicate email
     const existing = await User.findOne({ email });
-    if (existing)
+    if (existing) {
       return res.status(400).json({ message: "Email already registered" });
+    }
 
     const newUser = await User.create({ fullName, email, phone, password });
 
     const token = signToken(newUser);
     sendTokenCookie(res, token);
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Signup successful",
       user: {
         id: newUser._id,
@@ -64,32 +82,36 @@ const signup = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error signing up" });
+    console.error("signup error:", err);
+    return res.status(500).json({ message: "Error signing up" });
   }
 };
 
 /**
- * Login
+ * Login (validate credentials + set cookie)
  */
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password)
+    if (!email || !password) {
       return res.status(400).json({ message: "Email and password required" });
+    }
 
+    // fetch user with password for comparison
     const user = await User.findOne({ email }).select("+password");
-    if (!user)
+    if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
+    }
 
     const isMatch = await user.comparePassword(password);
-    if (!isMatch)
+    if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
+    }
 
     const token = signToken(user);
     sendTokenCookie(res, token);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Login successful",
       user: {
         id: user._id,
@@ -99,55 +121,64 @@ const login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error logging in" });
+    console.error("login error:", err);
+    return res.status(500).json({ message: "Error logging in" });
   }
 };
 
 /**
- * Logout
+ * Logout (clear cookie)
  */
 const logout = (req, res) => {
-  // Explicitly overwrite cookie with same options used when setting it
-  res.cookie("token", "", {
-    ...cookieOptions(),
-    expires: new Date(0),
-    maxAge: 0,
-  });
-  return res.json({ success: true, message: "Logged out successfully" });
+  try {
+    clearTokenCookie(res);
+    return res.json({ success: true, message: "Logged out successfully" });
+  } catch (err) {
+    console.error("logout error:", err);
+    return res.status(500).json({ success: false, message: "Logout failed" });
+  }
 };
 
 /**
- * Middleware: Protect routes
+ * Protect middleware — verify JWT in cookie and attach `req.user`
  */
 const protect = async (req, res, next) => {
   try {
-    if (!req.cookies) {
-      return res.status(401).json({ message: "Not logged in" });
-    }
-
-    const token = req.cookies.token;
+    // cookies parser middleware must run earlier (cookieParser())
+    const token = req.cookies?.token;
     if (!token) return res.status(401).json({ message: "Not logged in" });
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
+    // verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (!decoded || !decoded.id) {
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
+
+    // attach minimal user info to req.user
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+      fullName: decoded.fullName,
+    };
+    return next();
   } catch (err) {
-    console.error("Protect error:", err);
-    res.status(401).json({ message: "Invalid or expired token" });
+    console.error("protect error:", err);
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
 /**
- * Get current logged-in user
+ * Get current logged-in user (reads req.user set by protect)
  */
 const getUser = async (req, res) => {
   try {
+    if (!req.user?.id)
+      return res.status(401).json({ message: "Not logged in" });
+
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // IMPORTANT: return under { user: ... } so frontend fetchUser() can read res.data.user
-    res.status(200).json({
+    return res.status(200).json({
       user: {
         id: user._id,
         fullName: user.fullName,
@@ -157,13 +188,13 @@ const getUser = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error fetching user" });
+    console.error("getUser error:", err);
+    return res.status(500).json({ message: "Error fetching user" });
   }
 };
 
 /**
- * Request Password Reset
+ * Request password reset (sends token — email sending omitted)
  */
 const requestPasswordReset = async (req, res) => {
   const { email } = req.body;
@@ -171,10 +202,12 @@ const requestPasswordReset = async (req, res) => {
     const user = await User.findOne({ email }).select(
       "+passwordResetToken +passwordResetExpires"
     );
-    if (!user)
+    if (!user) {
+      // keep response generic to avoid account enumeration
       return res
         .status(200)
         .json({ message: "If that account exists, a reset link was sent." });
+    }
 
     const resetToken = user.createPasswordResetToken(60); // 60 mins expiry
     await user.save({ validateBeforeSave: false });
@@ -182,17 +215,17 @@ const requestPasswordReset = async (req, res) => {
     // TODO: send email with link containing token & userId
     // Example: `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}&id=${user._id}`
 
-    res
+    return res
       .status(200)
       .json({ message: "If that account exists, a reset link was sent." });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error requesting password reset" });
+    console.error("requestPasswordReset error:", err);
+    return res.status(500).json({ message: "Error requesting password reset" });
   }
 };
 
 /**
- * Reset Password
+ * Reset password given token & id
  */
 const resetPassword = async (req, res) => {
   const { token, id } = req.query;
@@ -204,22 +237,24 @@ const resetPassword = async (req, res) => {
     const user = await User.findById(id).select(
       "+passwordResetToken +passwordResetExpires"
     );
-    if (!user || !user.isPasswordResetTokenValid(token))
+    if (!user || !user.isPasswordResetTokenValid(token)) {
       return res.status(400).json({ message: "Invalid or expired token" });
+    }
 
     user.password = password;
     await user.clearPasswordResetToken();
 
     await user.save();
-    res
+    return res
       .status(200)
       .json({ message: "Password reset successful. Please log in." });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error resetting password" });
+    console.error("resetPassword error:", err);
+    return res.status(500).json({ message: "Error resetting password" });
   }
 };
 
+/* ---------- Exports ---------- */
 module.exports = {
   signup,
   login,

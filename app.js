@@ -18,14 +18,11 @@ const port = process.env.PORT || 5000;
 // Enable CORS for frontend with credentials
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://glamshair2.vercel.app"] // replace after deployment
-        : ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "https://glamshair2.vercel.app"],
     credentials: true,
   })
 );
-
+app.options("*", cors({ origin: ["http://localhost:5173", "https://glamshair2.vercel.app"], credentials: true }));
 // Parse JSON bodies
 app.use(express.json());
 // Parse cookies
