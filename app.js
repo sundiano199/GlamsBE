@@ -20,7 +20,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://glamshairr.vercel.app"] // replace after deployment
+        ? ["https://glamshair2.vercel.app"] // replace after deployment
         : ["http://localhost:5173"],
     credentials: true,
   })
