@@ -20,7 +20,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://glamshairr.vercel.app/"] // replace after deployment
+        ? ["https://glamshairr.vercel.app"] // replace after deployment
         : ["http://localhost:5173"],
     credentials: true,
   })
@@ -39,12 +39,12 @@ app.use("/api/cart", cartRouter);
 
 // ---------- Serve React build in production ----------
 if (process.env.NODE_ENV === "production") {
-  const buildPath = path.join(__dirname, "client", "build");
+  const buildPath = path.resolve(__dirname, "client", "build");
   app.use(express.static(buildPath));
 
   // SPA catch-all route — MUST be after API routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(buildPath, "index.html"));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.resolve(buildPath, "index.html"));
   });
 }
 
