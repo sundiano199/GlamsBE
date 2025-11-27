@@ -13,16 +13,25 @@ const cartRouter = require("./routes/cartRouter");
 
 const app = express();
 const port = process.env.PORT || 5000;
+const allowedOrigins = [
+  "http://localhost:5173", // dev
+  "https://glamshair2.vercel.app", // your Vercel frontend origin (exact)
+];
 
 // ---------- Middleware ----------
 // Enable CORS for frontend with credentials
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://glamshair2.vercel.app"],
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true); // allow server-to-server
+      return allowedOrigins.includes(origin)
+        ? cb(null, true)
+        : cb(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
-app.options("*", cors({ origin: ["http://localhost:5173", "https://glamshair2.vercel.app"], credentials: true }));
+
 // Parse JSON bodies
 app.use(express.json());
 // Parse cookies
