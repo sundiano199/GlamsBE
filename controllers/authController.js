@@ -20,15 +20,21 @@ const signToken = (user) => {
 };
 
 /**
+ * Cookie options factory (reused for set + clear)
+ */
+const cookieOptions = () => ({
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  path: "/", // ensure cookie is available site-wide
+});
+
+/**
  * Helper to send token in HTTP-only cookie
  */
 const sendTokenCookie = (res, token) => {
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-  });
+  res.cookie("token", token, cookieOptions());
 };
 
 /**
@@ -102,9 +108,13 @@ const login = async (req, res) => {
  * Logout
  */
 const logout = (req, res) => {
-  res
-    .clearCookie("token")
-    .json({ status: "success", message: "Logged out successfully" });
+  // Explicitly overwrite cookie with same options used when setting it
+  res.cookie("token", "", {
+    ...cookieOptions(),
+    expires: new Date(0),
+    maxAge: 0,
+  });
+  return res.json({ success: true, message: "Logged out successfully" });
 };
 
 /**
@@ -136,12 +146,15 @@ const getUser = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    // IMPORTANT: return under { user: ... } so frontend fetchUser() can read res.data.user
     res.status(200).json({
-      id: user._id,
-      fullName: user.fullName,
-      email: user.email,
-      phone: user.phone,
-      wishlist: user.wishlist,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+        wishlist: user.wishlist || [],
+      },
     });
   } catch (err) {
     console.error(err);
@@ -206,6 +219,7 @@ const resetPassword = async (req, res) => {
     res.status(500).json({ message: "Error resetting password" });
   }
 };
+
 module.exports = {
   signup,
   login,

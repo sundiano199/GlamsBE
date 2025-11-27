@@ -1,24 +1,241 @@
 [
   {
-    "id": "product01",
+    "id": "1",
     "title": "2 by 6 Bone straight",
-    "slug": "glam-bone-straight-wig",
+    "slug": "glam-bone-straight-wig-1",
     "short_description": "Silky bone-straight lace wig, natural sheen.",
     "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
     "categories": ["straight", "bone-straight", "long"],
     "lengths": [16, 18, 20, 22, 24, 26, 28, 30],
     "price_by_length": {
-      "16": 145.0,
-      "18": 165.0,
-      "20": 185.0,
-      "22": 205.0,
-      "24": 225.0,
-      "26": 245.0,
-      "28": 265.0,
-      "30": 285.0
+      "16": 145000,
+      "18": 165000,
+      "20": 185000,
+      "22": 205000,
+      "24": 225000,
+      "26": 245000,
+      "28": 265000,
+      "30": 285000
     },
-    "base_price": "145.000 - 285.000",
+    "base_price": "₦145,000 - ₦285,000",
 
-    "images": "https://ibb.co/jk12xrpX"
+    "images": "https://i.ibb.co/r21SLwWr/2-by-6-Bone-straight.jpg"
+  },
+  {
+    "id": "2",
+    "title": "2 by 4 SDD Vietnamese Bone Staight Dark Root (Brown)",
+    "slug": "glam-bone-straight-wig-2",
+    "short_description": "SDD Vietnamese bone staight.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["straight", "bone-straight", "long", "short"],
+    "lengths": [10, 12, 14, 16],
+    "price_by_length": {
+      "10": 140000,
+      "12": 155000,
+      "14": 180000,
+      "16": 205000
+    },
+    "base_price": "₦140,000 - ₦205,000",
+
+    "images": "https://i.ibb.co/1YcdyBFK/2-by-4-Bone-staight-Dark-root-brown.jpg"
+  },
+  {
+    "id": "3",
+    "title": "2 by 4 SDD Vietnamese Bone staight",
+    "slug": "glam-bone-straight-wig-3",
+    "short_description": "SDD Vietnamese bone staight.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["straight", "bone-straight", "long", "short"],
+    "lengths": [10, 12, 14, 16],
+    "price_by_length": {
+      "10": 140000,
+      "12": 155000,
+      "14": 180000,
+      "16": 205000
+    },
+    "base_price": "₦140,000 - ₦205,000",
+
+    "images": "https://i.ibb.co/fYzxF9H6/2-by-4-Bone-straight.jpg"
+  },
+  {
+    "id": "4",
+    "title": "2 by 4 Brown Highlight SDD Bone Staight",
+    "slug": "glam-bone-straight-wig-4",
+    "short_description": "SDD Vietnamese bone staight.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["straight", "bone-straight", "long", "short"],
+    "lengths": [10, 12, 14, 16, 18],
+    "price_by_length": {
+      "10": 140000,
+      "12": 155000,
+      "14": 180000,
+      "16": 205000
+    },
+    "base_price": "₦140,000 - ₦205,000",
+
+    "images": "https://i.ibb.co/fYzxF9H6/2-by-4-Bone-straight.jpg"
+  },
+  {
+    "id": "5",
+    "title": "2 by 4 Brown Highlight SDD Bone Staight",
+    "slug": "glam-bone-straight-wig-5",
+    "short_description": "SDD Vietnamese bone staight.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["straight", "bone-straight", "long", "short"],
+    "lengths": [10, 12, 14, 16],
+    "price_by_length": {
+      "10": 150000,
+      "12": 170000,
+      "14": 190000,
+      "16": 210000
+    },
+    "base_price": "₦150,000 - ₦210,000",
+
+    "images": "https://i.ibb.co/FM8D6fF/2-by-6-Bone-straight.jpg"
+  },
+  {
+    "id": "6",
+    "title": "2 by 6 Bounce (Wine)",
+    "slug": "glam-bouncy-wig-6",
+    "short_description": "SDD lookalike bounce.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["short", "bouncy"],
+    "lengths": [14],
+    "price_by_length": {
+      "14": 35000
+    },
+    "base_price": "₦35,000",
+
+    "images": "https://i.ibb.co/jkLvqsYR/2-by-6-Bounce-Wine-color.jpg"
+  },
+  {
+    "id": "7",
+    "title": "2 by 6 Bounce (Black) ",
+    "slug": "glam-bouncy-wig-7",
+    "short_description": "SDD lookalike bounce.",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["short", "bouncy"],
+    "lengths": [14],
+    "price_by_length": {
+      "14": 35000
+    },
+    "base_price": "₦35,000",
+
+    "images": "https://i.ibb.co/jkLvqsYR/2-by-6-Bounce-Wine-color.jpg"
+  },
+  {
+    "id": "8",
+    "title": "2 by 6 Pixie Curls (Piano Orange) ",
+    "slug": "glam-pixe-curls-8",
+    "short_description": "DD Pixie Curls",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["short", "curly"],
+    "lengths": [16],
+    "price_by_length": {
+      "16": 135000
+    },
+    "base_price": "₦135,000",
+
+    "images": "https://i.ibb.co/YBGpLDgG/2-by-6-Pixie-curls.jpg"
+  },
+  {
+    "id": "9",
+    "title": "5 by 5 Bounce ",
+    "slug": "glam-bouncy-hair-9",
+    "short_description": "5 by 5 bouncy and Dark root blonde",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["short", "bouncy"],
+    "lengths": [12],
+    "price_by_length": {
+      "12": 135000
+    },
+    "base_price": "₦135,000",
+
+    "images": "https://i.ibb.co/rGgSZp3c/5-by-5-Bounce.jpg"
+  },
+  {
+    "id": "10",
+    "title": "5 by 5 Wavy Bounce (Black) ",
+    "slug": "glam-bouncy-hair-10",
+    "short_description": "5 by 5 wavy bounce hair",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["long", "bouncy"],
+    "lengths": [20],
+    "price_by_length": {
+      "20": 198000
+    },
+    "base_price": "₦198,000",
+
+    "images": "https://i.ibb.co/HLSwbgHR/5-by-5-Bouncy-hair.jpg"
+  },
+  {
+    "id": "11",
+    "title": "5 by 5 Dark root SDD Bone straight",
+    "slug": "glam-bone-straight-11",
+    "short_description": "5 by 5 Dark root bone straight ...to be updated",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["long", "bone-straight", "straight"],
+    "lengths": [20],
+    "price_by_length": {
+      "20": 198000
+    },
+    "base_price": "₦198,000",
+
+    "images": "https://i.ibb.co/xtmhLMmp/5-by-5-Dark-root-SDD-Bone-straight.jpg"
+  },
+  {
+    "id": "12",
+    "title": "5 by 5 Jerry curls",
+    "slug": "glam-jerry-curls-12",
+    "short_description": "5 by 5 DD jerry curls",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["long", "curly"],
+    "lengths": [18],
+    "price_by_length": {
+      "18": 125000
+    },
+    "base_price": "₦125,000",
+
+    "images": "https://i.ibb.co/Xf3RzyzT/5-by-5-Jerry-curls.jpg"
+  },
+  {
+    "id": "13",
+    "title": "5 by 5 SDD Pixie curls",
+    "slug": "glam-pixie-curls-13",
+    "short_description": "5 by 5 SDD piano pixie curls",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["long", "curly", "short"],
+    "lengths": [12, 14, 16, 18, 20, 22],
+    "price_by_length": {
+      "12": 150000,
+      "14": 165000,
+      "16": 180000,
+      "18": 200000,
+      "20": 220000,
+      "22": 235000
+    },
+    "base_price": "₦150,000 - ₦235,000",
+
+    "images": "https://i.ibb.co/0yYCw6L4/5-by-5-Piano-Pixie-curls.jpg"
+  },
+  {
+    "id": "14",
+    "title": "5 by 5 SDD Pixie curls Wine color",
+    "slug": "glam-pixie-curls-14",
+    "short_description": "5 by 5 SDD pixie curls ... to continue tmr",
+    "description": "<h3>Glam Straight Premium Lace Wig</h3><p>100% Remy human hair. Available in multiple lengths. Pre-plucked hairline, medium density, heat friendly up to 180°C. Includes adjustable straps and combs.</p><ul><li>Texture: Bone Straight</li><li>Density: 150%</li><li>Cap: 13x4 Lace Front</li></ul>",
+    "categories": ["long", "curly"],
+    "lengths": [12, 14, 16, 18, 20, 22],
+    "price_by_length": {
+      "12": 150000,
+      "14": 165000,
+      "16": 180000,
+      "18": 200000,
+      "20": 220000,
+      "22": 235000
+    },
+    "base_price": "₦150,000 - ₦235,000",
+
+    "images": "https://i.ibb.co/N24qWK8c/5-by-5-SDD-Pixie-curls-Wine-color.jpg"
   }
 ]
