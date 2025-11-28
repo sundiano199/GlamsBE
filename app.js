@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173", // dev
-  "https://g2-iota.vercel.app/", // your Vercel frontend origin (exact)
+  "https://g2-iota.vercel.app", // your Vercel frontend origin (exact)
 ];
 
 // ---------- Middleware ----------
