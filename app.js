@@ -15,7 +15,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173", // dev
-  "glamsqueen.vercel.app", // your Vercel frontend origin (exact)
+  "glams-hair.vercel.app", // your Vercel frontend origin (exact)
 ];
 
 // ---------- Middleware ----------
