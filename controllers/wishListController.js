@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 // Get wishlist
 exports.getWishlist = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate(
-      "wishlist.product",
-      "title images price_by_length"
-    );
+    const user = await User.findById(req.user.id).populate({
+      path: "wishlist.product",
+      select: "id title images",
+    });
     res.json({ success: true, items: user.wishlist });
   } catch (err) {
     console.error(err);
